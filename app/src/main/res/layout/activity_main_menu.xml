@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#AEE6FF"
+    android:padding="16dp"
+    tools:context=".ui.MainMenu">
+
+    <!-- Header Card with App Name and Progress Animation -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/headerCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/tvPocketSafe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="POCKETSAFE"
+                android:textColor="#C8A2FF"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/pixel_game"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="12dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:id="@+id/progressAnimation"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:src="@drawable/progress_frame_3"
+                    android:scaleType="fitXY"
+                    android:background="#E0E0E0"
+                    android:padding="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvProgressPercentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="50% COMPLETE"
+                    android:textColor="#C8A2FF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/pixel_game"
+                    android:shadowColor="#80000000"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvGoalStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GOAL: R15,000 | SAVED: R7,500"
+                    android:textColor="#666666"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/pixel_game"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvMonthsRemaining"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5 MONTHS REMAINING"
+                    android:textColor="#666666"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/pixel_game"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Menu Grid -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerCard"
+        android:layout_above="@+id/navigationBar"
+        android:columnCount="2"
+        android:rowCount="3"
+        android:alignmentMode="alignMargins"
+        android:columnOrderPreserved="false"
+        android:padding="8dp">
+
+        <!-- Banking Details -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnBankingDetails"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:layout_row="0"
+            android:layout_column="0"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/curved_button_blue"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/imgBanking"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/banking"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BANKING DETAILS"
+                    android:textColor="#C8A2FF"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/pixel_game"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="8dp"/>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Add Expense -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnAddExpense"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/curved_button_blue"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/imgExpense"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/money"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADD EXPENSE"
+                    android:textColor="#C8A2FF"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/pixel_game"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="8dp"/>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Edit Monthly Goal -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnEditGoal"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:layout_row="1"
+            android:layout_column="0"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/curved_button_blue"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/imgGoal"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/goal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="EDIT GOAL"
+                    android:textColor="#C8A2FF"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/pixel_game"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="8dp"/>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Subscriptions -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnSubscriptions"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/curved_button_blue"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/imgSubscriptions"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/subscription"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SUBSCRIPTIONS"
+                    android:textColor="#C8A2FF"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/pixel_game"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="8dp"/>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- View Categories -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnViewCategories"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:layout_row="2"
+            android:layout_column="0"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/curved_button_blue"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/imgCategories"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/categories"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitCenter"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CATEGORIES"
+                    android:textColor="#C8A2FF"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/pixel_game"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="8dp"/>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- View Users -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnViewUsers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pixel_game"
+                    android:text="MyPocket"
+                    android:textColor="#C8A2FF"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="125dp"
+                    android:layout_height="134dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/mypocket" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </GridLayout>
+
+    <!-- Navigation Bar -->
+    <include
+        android:id="@+id/navigationBar"
+        layout="@layout/navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

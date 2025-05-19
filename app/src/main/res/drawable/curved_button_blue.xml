@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Pastel blue color -->
+    <solid android:color="#8FC1E3" />
+
+    <!-- Rounded corners (matches your 16dp card radius) -->
+    <corners android:radius="16dp" />
+
+    <!-- Optional subtle shadow -->
+    <stroke
+        android:width="1dp"
+        android:color="#77A8D3" />
+
+    <!-- Optional elevation effect -->
+    <padding
+        android:left="4dp"
+        android:top="4dp"
+        android:right="4dp"
+        android:bottom="4dp" />
+</shape>

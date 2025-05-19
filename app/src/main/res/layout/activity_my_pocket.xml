@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/denim_pocket_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MyPocket"
+            android:textColor="#E6AEFF"
+            android:textSize="32sp"
+            android:fontFamily="@font/pixel_game"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Pie Chart -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Filter Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/pixel_border"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <!-- Category Spinner -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textColor="#E6AEFF"
+                android:fontFamily="@font/pixel_game"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"/>
+
+            <Spinner
+                android:id="@+id/categorySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/pixel_border"
+                android:padding="12dp"
+                android:fontFamily="@font/pixel_game"
+                android:textColor="#E6AEFF"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Date Range -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/startDateButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Start Date"
+                    android:fontFamily="@font/pixel_game"
+                    android:textColor="#E6AEFF"
+                    android:background="@drawable/pixel_button"
+                    android:layout_marginEnd="8dp"/>
+
+                <Button
+                    android:id="@+id/endDateButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="End Date"
+                    android:fontFamily="@font/pixel_game"
+                    android:textColor="#E6AEFF"
+                    android:background="@drawable/pixel_button"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+
+            <!-- Apply Filter Button -->
+            <Button
+                android:id="@+id/applyFilterButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Apply Filter"
+                android:fontFamily="@font/pixel_game"
+                android:textColor="#E6AEFF"
+                android:background="@drawable/pixel_button"/>
+        </LinearLayout>
+
+        <!-- Total Amount -->
+        <TextView
+            android:id="@+id/totalAmountTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Amount: $0.00"
+            android:textColor="#E6AEFF"
+            android:fontFamily="@font/pixel_game"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Expenses List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/expensesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</ScrollView> 

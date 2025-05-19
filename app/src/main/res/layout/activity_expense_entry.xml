@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#5b3f2c"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/receipt"
+        android:padding="16dp">
+
+        <!-- Header Image -->
+
+        <!-- Description -->
+
+        <ImageView
+            android:layout_width="240dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="24dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/expenseentry" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textColor="#f3c34e"
+            android:fontFamily="@font/pixel_game"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/descriptionEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/pixel_border"
+            android:padding="12dp"
+            android:fontFamily="@font/pixel_game"
+            android:textColor="#f3c34e"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Amount -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amount"
+            android:textColor="#f3c34e"
+            android:fontFamily="@font/pixel_game"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/amountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:background="@drawable/pixel_border"
+            android:padding="12dp"
+            android:fontFamily="@font/pixel_game"
+            android:textColor="#f3c34e"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Date -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textColor="#f3c34e"
+            android:fontFamily="@font/pixel_game"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/dateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            android:background="@drawable/pixel_border"
+            android:padding="12dp"
+            android:fontFamily="@font/pixel_game"
+            android:textColor="#f3c34e"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Category -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textColor="#f3c34e"
+            android:fontFamily="@font/pixel_game"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/categoryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Category"
+            android:fontFamily="@font/pixel_game"
+            android:textColor="#f3c34e"
+            android:background="@drawable/pixel_button"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Add Photos Button -->
+        <Button
+            android:id="@+id/addPhotosButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Photos"
+            android:fontFamily="@font/pixel_game"
+            android:textColor="#f3c34e"
+            android:background="@drawable/pixel_button"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Photo Preview -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp">
+
+            <ImageView
+                android:id="@+id/ivPhotoPreview"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/pixel_border"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No photo selected"
+                android:textColor="#f3c34e"
+                android:fontFamily="@font/pixel_game"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:id="@+id/tvNoPhoto"/>
+
+        </FrameLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/submitButton"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/checkmark"
+                android:background="@drawable/pixel_button"
+                android:layout_marginEnd="16dp"/>
+
+            <ImageButton
+                android:id="@+id/cancelButton"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/cancel"
+                android:background="@drawable/pixel_button"/>
+
+        </LinearLayout>
+
+        <!-- Animated Coin -->
+        <ImageView
+            android:id="@+id/coinImageView"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/pixel_coins"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+</ScrollView> 

@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#994F31">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entries"
+        android:textColor="#EEBA86"
+        android:textSize="24sp"
+        android:fontFamily="@font/pixel_game"
+        android:layout_marginBottom="20dp" />
+</LinearLayout>
