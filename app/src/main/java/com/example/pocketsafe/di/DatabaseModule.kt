@@ -1,14 +1,26 @@
 package com.example.pocketsafe.di
 
+/**
+ * TEMPORARILY DISABLED
+ * 
+ * This Hilt module is disabled because Hilt has been commented out in the build.gradle.kts file.
+ * Instead, we're using the MainApplication singleton pattern to provide database access.
+ * This file is kept for reference when Hilt is re-enabled.
+ */
+
+/*
 import android.content.Context
+import android.util.Log
 import androidx.room.Room
 import com.example.pocketsafe.data.AppDatabase
-import com.example.pocketsafe.data.UserDatabase
+import com.example.pocketsafe.data.dao.AccountDao
+import com.example.pocketsafe.data.dao.BillReminderDao
 import com.example.pocketsafe.data.dao.BudgetGoalDao
 import com.example.pocketsafe.data.dao.CategoryDao
 import com.example.pocketsafe.data.dao.ExpenseDao
+import com.example.pocketsafe.data.dao.SubscriptionDao
 import com.example.pocketsafe.data.dao.UserDao
-import com.example.pocketsafe.data.dao.AccountDao
+import com.example.pocketsafe.data.dao.SavingsGoalDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,41 +32,48 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
-    @Provides
-    @Singleton
-    fun provideDatabase(
-        @ApplicationContext context: Context
-    ): UserDatabase = Room.databaseBuilder(
-        context,
-        UserDatabase::class.java,
-        "user_database"
-    ).build()
+    private const val TAG = "DatabaseModule"
 
     @Provides
     @Singleton
     fun provideAppDatabase(
         @ApplicationContext context: Context
-    ): AppDatabase = Room.databaseBuilder(
-        context,
-        AppDatabase::class.java,
-        "app_database"
-    ).build()
+    ): AppDatabase {
+        try {
+            Log.d(TAG, "Getting AppDatabase using singleton")
+            return com.example.pocketsafe.MainApplication.getDatabase(context)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting AppDatabase: ${e.message}")
+            // Last resort fallback - create a new in-memory database
+            return Room.inMemoryDatabaseBuilder(
+                context,
+                AppDatabase::class.java
+            ).build()
+        }
+    }
 
     @Provides
-    fun provideUserDao(database: UserDatabase): UserDao = database.userDao()
+    fun provideUserDao(database: AppDatabase): UserDao = database.userDao()
 
     @Provides
-    fun provideSavingsGoalDao(database: UserDatabase) = database.savingsGoalDao()
+    fun provideSavingsGoalDao(database: AppDatabase): SavingsGoalDao = database.savingsGoalDao()
 
     @Provides
-    fun provideAccountDao(database: UserDatabase): AccountDao = database.accountDao()
+    fun provideBudgetGoalDao(database: AppDatabase): BudgetGoalDao = database.budgetGoalDao()
 
     @Provides
-    fun provideBudgetGoalDao(database: UserDatabase) = database.budgetGoalDao()
+    fun provideCategoryDao(database: AppDatabase): CategoryDao = database.categoryDao()
 
     @Provides
-    fun provideCategoryDao(database: UserDatabase): CategoryDao = database.categoryDao()
+    fun provideExpenseDao(database: AppDatabase): ExpenseDao = database.expenseDao()
 
     @Provides
-    fun provideExpenseDao(database: UserDatabase) = database.expenseDao()
-} 
+    fun provideSubscriptionDao(database: AppDatabase): SubscriptionDao = database.subscriptionDao()
+    
+    @Provides
+    fun provideBillReminderDao(database: AppDatabase): BillReminderDao = database.billReminderDao()
+    
+    @Provides
+    fun provideAccountDao(database: AppDatabase): AccountDao = database.accountDao()
+}
+*/

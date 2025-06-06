@@ -19,6 +19,11 @@ import com.google.android.material.textfield.TextInputEditText
 class CategorySelectionDialog : BottomSheetDialogFragment() {
     private var selectedCategory: String? = null
     private var listener: OnCategorySelectedListener? = null
+    
+    // Method to set the listener directly without requiring fragment context implementation
+    fun setListener(listener: OnCategorySelectedListener) {
+        this.listener = listener
+    }
 
     interface OnCategorySelectedListener {
         fun onCategorySelected(category: Category)
@@ -81,11 +86,22 @@ class CategorySelectionDialog : BottomSheetDialogFragment() {
                 return@setOnClickListener
             }
 
-            val iconType = when (selectedCategory) {
-                "Sports" -> IconType.SPORTS
-                "Entertainment" -> IconType.ENTERTAINMENT
-                "Medical" -> IconType.MEDICAL
-                "Necessities" -> IconType.NECESSITY
+            // Map string category names to pixel-themed icons
+            val iconType = when (selectedCategory?.uppercase()) {
+                "SPORTS" -> IconType.SPORTS
+                "ENTERTAINMENT" -> IconType.ENTERTAINMENT
+                "MEDICAL" -> IconType.MEDICAL
+                "HEALTHCARE" -> IconType.MEDICAL
+                "NECESSITY" -> IconType.NECESSITY
+                "FOOD" -> IconType.FOOD
+                "SHOPPING" -> IconType.SHOPPING
+                "TRANSPORTATION" -> IconType.TRANSPORT
+                "UTILITIES" -> IconType.UTILITIES
+                "EDUCATION" -> IconType.EDUCATION
+                "SAVINGS" -> IconType.SAVINGS
+                "INVESTMENT" -> IconType.INVESTMENT
+                "BILLS" -> IconType.BILLS
+                "SUBSCRIPTION" -> IconType.SUBSCRIPTION
                 else -> IconType.OTHER
             }
 
@@ -103,11 +119,11 @@ class CategorySelectionDialog : BottomSheetDialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnCategorySelectedListener) {
+        // Only try to get listener from context if not set directly
+        if (listener == null && context is OnCategorySelectedListener) {
             listener = context
-        } else {
-            throw RuntimeException("$context must implement OnCategorySelectedListener")
         }
+        // No longer throwing exception since we're using direct listener setting
     }
 
     override fun onDetach() {
@@ -118,6 +134,16 @@ class CategorySelectionDialog : BottomSheetDialogFragment() {
     companion object {
         fun newInstance(): CategorySelectionDialog {
             return CategorySelectionDialog()
+        }
+        
+        /**
+         * Static helper method to show the dialog with proper typing
+         * Maintains pixel-retro theme styling while avoiding type inference issues
+         */
+        fun show(manager: androidx.fragment.app.FragmentManager, tag: String, listener: OnCategorySelectedListener) {
+            val dialog = CategorySelectionDialog()
+            dialog.setListener(listener)
+            dialog.show(manager, tag)
         }
     }
 } 

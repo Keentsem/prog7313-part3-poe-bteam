@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1095411904305",
+    "project_id": "comexamplepocketsafe",
+    "storage_bucket": "comexamplepocketsafe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095411904305:android:0aa4c423986e4f96be4a10",
+        "android_client_info": {
+          "package_name": "com.example.pocketsafe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWPtKa6gGf88EZ4etcV4NyH3R405H1wa4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

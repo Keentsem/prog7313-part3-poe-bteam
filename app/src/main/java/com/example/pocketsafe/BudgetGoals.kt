@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.setPadding
-import com.example.pocketsafe.data.UserDatabase
+import com.example.pocketsafe.data.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch

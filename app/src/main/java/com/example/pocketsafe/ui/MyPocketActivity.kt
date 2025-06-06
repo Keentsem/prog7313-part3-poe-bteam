@@ -1,37 +1,51 @@
 package com.example.pocketsafe.ui
 
 import android.app.DatePickerDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.pocketsafe.ui.activity.BaseActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pocketsafe.MainApplication
 import com.example.pocketsafe.R
 import com.example.pocketsafe.data.AppDatabase
+import com.example.pocketsafe.data.Category
 import com.example.pocketsafe.data.Expense
+import com.example.pocketsafe.data.IconType
 import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.inject.Inject
 
-@AndroidEntryPoint
-class MyPocketActivity : AppCompatActivity() {
-    @Inject
-    lateinit var db: AppDatabase
+/**
+ * Activity for viewing expense charts and history with pixel-retro theme styling
+ * Modified to work without Hilt to prevent app crashes
+ * Uses gold (#f3c34e) and brown (#5b3f2c) color scheme for UI elements
+ */
+class MyPocketActivity : BaseActivity() {
+    // Manually initialize instead of using Hilt injection
+    private lateinit var db: AppDatabase
 
+    // UI Components
     private lateinit var pieChart: PieChart
     private lateinit var categorySpinner: Spinner
     private lateinit var startDateButton: Button
@@ -39,45 +53,135 @@ class MyPocketActivity : AppCompatActivity() {
     private lateinit var applyFilterButton: Button
     private lateinit var totalAmountTextView: TextView
     private lateinit var expensesRecyclerView: RecyclerView
-    private lateinit var expenseAdapter: ExpenseAdapter
+    private lateinit var categoryLegendRecyclerView: RecyclerView
+    private lateinit var budgetProgressBar: ProgressBar
+    private lateinit var budgetPercentageTextView: TextView
+    private lateinit var spentAmountTextView: TextView
+    private lateinit var budgetAmountTextView: TextView
+    private lateinit var remainingBudgetTextView: TextView
 
+    // Adapters
+    private lateinit var expenseAdapter: ExpenseAdapter
+    private lateinit var categoryLegendAdapter: CategoryLegendAdapter
+
+    // Data
     private var startDate: Date? = null
     private var endDate: Date? = null
     private val dateFormatter = SimpleDateFormat("MM/dd/yyyy", Locale.US)
+    private val currencyFormat = NumberFormat.getCurrencyInstance(Locale.US)
+    
+    // Budget constants - in a real app, these would come from user settings or database
+    private val monthlyBudget = 1000.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_my_pocket)
+        try {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_my_pocket)
+            
+            // Apply pixel-retro theme styling with brown (#5b3f2c) background
+            window.decorView.setBackgroundColor(Color.parseColor("#5b3f2c"))
+            
+            // Setup navigation bar
+            super.setupNavigationBar()
+            
+            // Manually initialize the database without Hilt
+            try {
+                db = MainApplication.getDatabase(applicationContext)
+                Log.d("MyPocketActivity", "Database initialized successfully")
+            } catch (e: Exception) {
+                Log.e("MyPocketActivity", "Error initializing database: ${e.message}")
+                Toast.makeText(this, "Error initializing database: ${e.message}", Toast.LENGTH_LONG).show()
+                finish()
+                return
+            }
 
-        initializeViews()
-        setupPieChart()
-        setupCategorySpinner()
-        setupDateButtons()
-        setupFilterButton()
-        setupRecyclerView()
+            try {
+                initializeViews()
+                setupPieChart()
+                setupCategorySpinner()
+                setupDateButtons()
+                setupFilterButton()
+                setupRecyclerViews()
+                setupBudgetView()
 
-        loadCategories()
-        loadExpenses()
+                // Load data with error handling
+                safeLoadInitialData()
+            } catch (e: Exception) {
+                showError("Error initializing UI: ${e.message ?: "Unknown error"}")
+            }
+        } catch (e: Exception) {
+            // Catastrophic failure - show a simple alert and finish
+            Toast.makeText(this, "Failed to initialize My Pocket view", Toast.LENGTH_LONG).show()
+            finish()
+        }
+    }
+    
+    private fun safeLoadInitialData() {
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                loadCategories()
+                loadExpenses()
+            } catch (e: Exception) {
+                showError("Error loading data: ${e.message ?: "Unknown error"}")
+            }
+        }
+    }
+    
+    private fun showError(message: String) {
+        // Show error on UI
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        
+        // Create a temporary TextView to display the error if it's not already on screen
+        val errorTextView = TextView(this).apply {
+            text = message
+            setTextColor(Color.RED)
+            textSize = 16f
+            setPadding(16, 16, 16, 16)
+            background = ContextCompat.getDrawable(context, R.drawable.rounded_corner_background)
+        }
+        
+        // Add to root layout
+        val rootView = findViewById<View>(android.R.id.content) as FrameLayout
+        rootView.addView(errorTextView)
+        
+        // Log error for debugging
+        android.util.Log.e("MyPocket", message)
     }
 
     private fun initializeViews() {
+        // Chart and category views
         pieChart = findViewById(R.id.pieChart)
         categorySpinner = findViewById(R.id.categorySpinner)
+        categoryLegendRecyclerView = findViewById(R.id.categoryLegendRecyclerView)
+        
+        // Date filter views
         startDateButton = findViewById(R.id.startDateButton)
         endDateButton = findViewById(R.id.endDateButton)
         applyFilterButton = findViewById(R.id.applyFilterButton)
+        
+        // Expense list views
         totalAmountTextView = findViewById(R.id.totalAmountTextView)
         expensesRecyclerView = findViewById(R.id.expensesRecyclerView)
+        
+        // Budget tracking views
+        budgetProgressBar = findViewById(R.id.budgetProgressBar)
+        budgetPercentageTextView = findViewById(R.id.budgetPercentageTextView)
+        spentAmountTextView = findViewById(R.id.spentAmountTextView)
+        budgetAmountTextView = findViewById(R.id.budgetAmountTextView)
+        remainingBudgetTextView = findViewById(R.id.remainingBudgetTextView)
     }
 
     private fun setupPieChart() {
         pieChart.apply {
             description.isEnabled = false
-            setHoleColor(android.graphics.Color.TRANSPARENT)
-            setEntryLabelColor(android.graphics.Color.WHITE)
-            setEntryLabelTextSize(12f)
-            legend.textColor = android.graphics.Color.WHITE
-            legend.textSize = 12f
+            isDrawHoleEnabled = true
+            setHoleColor(Color.TRANSPARENT)
+            setTransparentCircleAlpha(0)
+            setDrawEntryLabels(false)
+            setUsePercentValues(true)
+            setCenterTextSize(16f)
+            setCenterTextColor(ContextCompat.getColor(this@MyPocketActivity, R.color.teal_primary))
+            legend.isEnabled = false // We'll use our custom legend
         }
     }
 
@@ -106,11 +210,55 @@ class MyPocketActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerViews() {
+        // Setup expense recycler view
         expenseAdapter = ExpenseAdapter()
         expensesRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@MyPocketActivity)
             adapter = expenseAdapter
+        }
+
+        // Setup category legend recycler view
+        categoryLegendAdapter = CategoryLegendAdapter()
+        categoryLegendRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@MyPocketActivity)
+            adapter = categoryLegendAdapter
+        }
+    }
+
+    private fun setupBudgetView() {
+        // Set initial budget information
+        budgetAmountTextView.text = "Budget: ${currencyFormat.format(monthlyBudget)}"
+        updateBudgetProgress(0.0) // Will be updated when expenses are loaded
+    }
+    
+    private fun updateBudgetProgress(spentAmount: Double, budget: Double = monthlyBudget) {
+        // Calculate percentage of budget used
+        val percentage = if (budget > 0) (spentAmount / budget * 100).toInt().coerceIn(0, 100) else 0
+        val remaining = budget - spentAmount
+        
+        // Update progress bar
+        budgetProgressBar.progress = percentage
+        budgetPercentageTextView.text = "$percentage%"
+        
+        // Update amount texts
+        spentAmountTextView.text = "Spent: ${currencyFormat.format(spentAmount)}"
+        budgetAmountTextView.text = "Budget: ${currencyFormat.format(budget)}"
+        remainingBudgetTextView.text = "Remaining: ${currencyFormat.format(remaining)}"
+        
+        // Adjust progress bar color based on usage
+        val progressDrawable = budgetProgressBar.progressDrawable.mutate()
+        val color = when {
+            percentage > 90 -> Color.parseColor("#F44336") // Red when over 90% of budget
+            percentage > 75 -> Color.parseColor("#FF9800") // Orange when over 75% of budget
+            else -> Color.parseColor("#FFFFFF") // White (default)
+        }
+        
+        // Apply tint to progress bar
+        try {
+            progressDrawable.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
+        } catch (e: Exception) {
+            // Fallback if color filter doesn't work
         }
     }
 
@@ -142,22 +290,54 @@ class MyPocketActivity : AppCompatActivity() {
     private fun loadCategories() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val categories = db.expenseDao().getAllExpenseCategories()
-                val categoriesWithAll = listOf("All Categories") + categories
+                val categories = db.categoryDao().getAllCategories().first()
+                val categoryNames = mutableListOf("All Categories")
+                categoryNames.addAll(categories.map { it.name }) // Use name instead of ID for better UX
+                
+                // Create a mapping of category names to their IDs for later use
+                val categoryMap = categories.associateBy({ it.name }, { it.id })
 
                 withContext(Dispatchers.Main) {
                     val adapter = ArrayAdapter(
                         this@MyPocketActivity,
                         android.R.layout.simple_spinner_item,
-                        categoriesWithAll
+                        categoryNames
                     ).apply {
                         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     }
                     categorySpinner.adapter = adapter
+
+                    // If no categories exist yet, populate with default categories
+                    if (categories.isEmpty()) {
+                        createDefaultCategories()
+                    }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@MyPocketActivity, "Failed to load categories", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MyPocketActivity, "Failed to load categories: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+    
+    private fun createDefaultCategories() {
+        val defaultCategories = listOf(
+            Category(name = "Food & Dining", iconType = IconType.FOOD, icon = "restaurant", color = Color.parseColor("#4CAF50"), monthlyAmount = 300.0),
+            Category(name = "Transportation", iconType = IconType.TRANSPORT, icon = "car", color = Color.parseColor("#FFC107"), monthlyAmount = 150.0),
+            Category(name = "Shopping", iconType = IconType.SHOPPING, icon = "cart", color = Color.parseColor("#2196F3"), monthlyAmount = 200.0),
+            Category(name = "Bills & Utilities", iconType = IconType.NECESSITY, icon = "bill", color = Color.parseColor("#F44336"), monthlyAmount = 250.0),
+            Category(name = "Entertainment", iconType = IconType.ENTERTAINMENT, icon = "movie", color = Color.parseColor("#9C27B0"), monthlyAmount = 100.0)
+        )
+        
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                for (category in defaultCategories) {
+                    db.categoryDao().insertCategory(category)
+                }
+                loadCategories() // Reload after adding default categories
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@MyPocketActivity, "Failed to create default categories", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -166,70 +346,131 @@ class MyPocketActivity : AppCompatActivity() {
     private fun loadExpenses() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val selectedCategory = categorySpinner.selectedItem.toString()
-                // Get expenses, handling Flow type properly
-                val allExpenses: List<Expense> = if (selectedCategory == "All Categories") {
-                    // Collect the Flow to get a List
-                    db.expenseDao().getAllExpenses().first()
+                // First, load all categories to get current info
+                val allCategories = db.categoryDao().getAllCategories().first()
+                val categoryMap = allCategories.associateBy({ it.id }, { it })
+                
+                // Get the selected category name from spinner
+                val selectedCategoryName = categorySpinner.selectedItem.toString()
+                
+                // Get expenses based on category selection
+                val allExpenses: List<Expense> = if (selectedCategoryName == "All Categories") {
+                    // Get all expenses
+                    db.expenseDao().getAllExpenses()
                 } else {
-                    try {
-                        // Try to parse the selection as a category ID (integer)
-                        val categoryId = selectedCategory.toIntOrNull() 
-                            ?: return@launch withContext(Dispatchers.Main) {
-                                Toast.makeText(this@MyPocketActivity, "Invalid category ID", Toast.LENGTH_SHORT).show()
-                            }
-                        // Collect the Flow to get a List
-                        db.expenseDao().getExpensesByCategory(categoryId).first()
-                    } catch (e: Exception) {
-                        // If parsing fails, default to all expenses
-                        db.expenseDao().getAllExpenses().first()
+                    // Find the category ID for the selected name
+                    val category = allCategories.find { it.name == selectedCategoryName }
+                    if (category != null) {
+                        // Get expenses for this category
+                        db.expenseDao().getExpensesByCategory(category.id)
+                    } else {
+                        // Fallback to all expenses if category not found
+                        db.expenseDao().getAllExpenses()
                     }
                 }
 
-                // Create a new filtered list instead of using the filter extension function
-                val filteredExpenses = mutableListOf<Expense>()
-                for (expense in allExpenses) {
+                // Apply date filtering
+                val filteredExpenses = allExpenses.filter { expense ->
                     val expenseDate = Date(expense.date)
-                    if ((startDate == null || expenseDate >= startDate) &&
-                        (endDate == null || expenseDate <= endDate)) {
-                        filteredExpenses.add(expense)
-                    }
+                    (startDate == null || expenseDate >= startDate) &&
+                    (endDate == null || expenseDate <= endDate)
                 }
 
                 // Calculate category totals for pie chart
                 val categoryTotals = mutableMapOf<Int, Double>()
                 for (expense in filteredExpenses) {
-                    val categoryId = expense.categoryId
-                    val currentTotal = categoryTotals.getOrDefault(categoryId, 0.0)
-                    categoryTotals[categoryId] = currentTotal + expense.amount
+                    val currentTotal = categoryTotals.getOrDefault(expense.categoryId, 0.0)
+                    categoryTotals[expense.categoryId] = currentTotal + expense.amount
                 }
 
-                // Create pie chart entries
+                // Create pie chart entries and legend items
                 val pieEntries = mutableListOf<PieEntry>()
+                val legendItems = mutableListOf<CategoryLegendItem>()
+                
+                // Calculate total monthly budget from all categories
+                var totalBudget = 0.0
+                
+                // Process each category with expenses
                 for ((categoryId, amount) in categoryTotals) {
-                    // Convert categoryId to a string for display in the pie chart
-                    pieEntries.add(PieEntry(amount.toFloat(), "Category $categoryId"))
+                    // Get category from map or create a placeholder
+                    val category = categoryMap[categoryId] ?: Category(
+                        id = categoryId,
+                        name = "Category $categoryId",
+                        iconType = IconType.OTHER,
+                        icon = "category",
+                        color = ContextCompat.getColor(this@MyPocketActivity, R.color.teal_primary)
+                    )
+                    
+                    // Add the category's monthly budget to total budget
+                    totalBudget += category.monthlyAmount
+                    
+                    // Add to pie chart entries
+                    pieEntries.add(PieEntry(amount.toFloat(), category.name))
+                    
+                    // Add to legend items
+                    legendItems.add(CategoryLegendItem(
+                        name = category.name,
+                        amount = amount,
+                        color = category.color ?: ContextCompat.getColor(this@MyPocketActivity, R.color.teal_primary),
+                        categoryId = categoryId
+                    ))
+                }
+
+                // Calculate total spent for budget tracking
+                val totalSpent = filteredExpenses.sumOf { it.amount }
+                
+                // If no budget is set, use the default
+                if (totalBudget <= 0) {
+                    totalBudget = monthlyBudget
                 }
 
                 // Update UI
                 withContext(Dispatchers.Main) {
+                    // Update budget progress with actual category budgets
+                    updateBudgetProgress(totalSpent, totalBudget)
+                    
                     // Update pie chart
-                    val dataSet = PieDataSet(pieEntries, "Categories").apply {
-                        colors = ColorTemplate.MATERIAL_COLORS.toList()
+                    if (pieEntries.isNotEmpty()) {
+                        val dataSet = PieDataSet(pieEntries, "").apply {
+                            // Assign colors from categories
+                            colors = legendItems.map { it.color }
+                            valueTextSize = 14f
+                            valueTextColor = Color.WHITE
+                            valueFormatter = PercentFormatter(pieChart)
+                            sliceSpace = 2f
+                        }
+                        
+                        val pieData = PieData(dataSet).apply {
+                            setValueTextSize(12f)
+                            setValueTextColor(Color.WHITE)
+                        }
+                        
+                        pieChart.apply {
+                            data = pieData
+                            setCenterText("Total\n${currencyFormat.format(totalSpent)}")
+                            invalidate()
+                        }
+                    } else {
+                        pieChart.apply {
+                            clear()
+                            setCenterText("No Data")
+                            invalidate()
+                        }
                     }
-                    pieChart.data = PieData(dataSet)
-                    pieChart.invalidate()
 
-                    // Update total amount
-                    val total = filteredExpenses.sumOf { it.amount }
-                    totalAmountTextView.text = "Total Amount: $${String.format("%.2f", total)}"
+                    // Update category legend with sorted categories
+                    categoryLegendAdapter.updateCategories(legendItems.sortedByDescending { it.amount })
 
-                    // Update RecyclerView
+                    // Update total amount text
+                    totalAmountTextView.text = "Total: ${currencyFormat.format(totalSpent)}"
+
+                    // Update expense list
                     expenseAdapter.updateExpenses(filteredExpenses)
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@MyPocketActivity, "Failed to load expenses", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MyPocketActivity, "Failed to load expenses: ${e.message}", Toast.LENGTH_SHORT).show()
+                    e.printStackTrace() // Log the full stack trace for debugging
                 }
             }
         }

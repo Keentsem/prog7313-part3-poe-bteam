@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -16,10 +17,12 @@ import android.widget.*
 import androidx.core.view.setPadding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import com.example.pocketsafe.data.Expense
 import com.example.pocketsafe.data.Category
-import com.example.pocketsafe.data.UserDatabase
+import com.example.pocketsafe.data.AppDatabase
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -27,7 +30,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ExpenseEntry : Activity() {
-    private lateinit var db: UserDatabase
+    private lateinit var db: AppDatabase
     private lateinit var categorySpinner: Spinner
     private lateinit var amountEditText: EditText
     private lateinit var descriptionEditText: EditText
@@ -43,7 +46,7 @@ class ExpenseEntry : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        db = UserDatabase.getDatabase(applicationContext)
+        db = AppDatabase.getDatabase(applicationContext)
         val mainLayout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setBackgroundColor(Color.parseColor("#8B5E3C"))
@@ -219,31 +222,31 @@ class ExpenseEntry : Activity() {
     private fun loadCategories() {
         MainScope().launch(Dispatchers.IO) {
             try {
-                db.categoryDao().getAllCategories().collect { categoryList ->
-                    categories = categoryList
-                    runOnUiThread {
-                        val adapter = object : ArrayAdapter<Category>(
-                            this@ExpenseEntry,
-                            android.R.layout.simple_spinner_item,
-                            categories
-                        ) {
-                            override fun getView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup): android.view.View {
-                                val view = super.getView(position, convertView, parent)
-                                (view as TextView).setTextColor(Color.parseColor("#D2B48C"))
-                                return view
-                            }
-
-                            override fun getDropDownView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup): android.view.View {
-                                val view = super.getDropDownView(position, convertView, parent)
-                                view.setBackgroundColor(Color.parseColor("#8B5E3C"))
-                                (view as TextView).setTextColor(Color.parseColor("#D2B48C"))
-                                return view
-                            }
+                // Get the first emission from the Flow
+                val categoryList = db.categoryDao().getAllCategories().firstOrNull() ?: emptyList()
+                categories = categoryList
+                runOnUiThread {
+                    val adapter = object : ArrayAdapter<Category>(
+                        this@ExpenseEntry,
+                        android.R.layout.simple_spinner_item,
+                        categories
+                    ) {
+                        override fun getView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup): android.view.View {
+                            val view = super.getView(position, convertView, parent)
+                            (view as TextView).setTextColor(Color.parseColor("#D2B48C"))
+                            return view
                         }
 
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                        categorySpinner.adapter = adapter
+                        override fun getDropDownView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup): android.view.View {
+                            val view = super.getDropDownView(position, convertView, parent)
+                            view.setBackgroundColor(Color.parseColor("#8B5E3C"))
+                            (view as TextView).setTextColor(Color.parseColor("#D2B48C"))
+                            return view
+                        }
                     }
+
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    categorySpinner.adapter = adapter
                 }
             } catch (e: Exception) {
                 runOnUiThread {
@@ -263,7 +266,7 @@ class ExpenseEntry : Activity() {
             this,
             { _, selectedYear, selectedMonth, selectedDayOfMonth ->
                 val formatted = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDayOfMonth)
-                val parsedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(formatted)
+                val parsedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(formatted) ?: Date()
 
                 if (isStartDate) {
                     startDate = parsedDate
@@ -314,8 +317,8 @@ class ExpenseEntry : Activity() {
             categoryId = selectedCategory.id,
             amount = amount,
             description = description,
-            startDate = sdf.format(startDate),
-            endDate = sdf.format(endDate),
+            startDate = sdf.format(startDate ?: Date()),
+            endDate = sdf.format(endDate ?: Date()),
             photoUri = photoUri
         )
 
@@ -342,7 +345,14 @@ class ExpenseEntry : Activity() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             val selectedImage = data.data
             try {
-                val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedImage)
+                // Using safer API that doesn't use deprecated getBitmap
+                val bitmap = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                    val source = ImageDecoder.createSource(contentResolver, selectedImage!!)
+                    ImageDecoder.decodeBitmap(source)
+                } else {
+                    @Suppress("DEPRECATION")
+                    MediaStore.Images.Media.getBitmap(contentResolver, selectedImage)
+                }
                 photoImageView.setImageBitmap(bitmap)
 
                 val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())

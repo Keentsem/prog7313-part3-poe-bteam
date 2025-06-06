@@ -4,28 +4,44 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.pocketsafe.R
 import com.example.pocketsafe.databinding.ActivityLoginBinding
 import com.example.pocketsafe.ui.MainMenu
 import com.example.pocketsafe.ui.SetupActivity
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
+/**
+ * Login activity with pixel-retro theme styling
+ * Modified to work without Hilt to prevent app crashes
+ * Uses gold (#f3c34e) and brown (#5b3f2c) color scheme
+ */
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private val viewModel: AuthViewModel by viewModels()
+    private lateinit var viewModel: AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("LoginActivity", "onCreate called")
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        // Apply pixel-retro theme styling with brown (#5b3f2c) background
+        window.decorView.setBackgroundColor(android.graphics.Color.parseColor("#5b3f2c"))
+        
+        // Initialize ViewModel using Factory pattern instead of Hilt
+        try {
+            viewModel = ViewModelProvider(this, AuthViewModel.Factory(application))
+                .get(AuthViewModel::class.java)
+            Log.d("LoginActivity", "ViewModel initialized successfully")
+        } catch (e: Exception) {
+            Log.e("LoginActivity", "Error initializing ViewModel: ${e.message}")
+            Toast.makeText(this, "Error initializing ViewModel: ${e.message}", Toast.LENGTH_LONG).show()
+        }
 
         setupViews()
         observeState()

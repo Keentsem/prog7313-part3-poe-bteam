@@ -1,30 +1,47 @@
 package com.example.pocketsafe.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.pocketsafe.MainApplication
 import com.example.pocketsafe.R
 import com.example.pocketsafe.data.User
 import com.example.pocketsafe.data.dao.UserDao
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-@AndroidEntryPoint
+/**
+ * Activity to display a list of users with pixel-retro theme styling
+ * Modified to work without Hilt to prevent app crashes
+ * Uses gold (#f3c34e) and brown (#5b3f2c) color scheme
+ */
 class UserListActivity : AppCompatActivity() {
-    @Inject
-    lateinit var userDao: UserDao
-    
+    private lateinit var userDao: UserDao
     private lateinit var listView: ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_list)
+        
+        // Apply pixel-retro theme styling with brown (#5b3f2c) background
+        window.decorView.setBackgroundColor(android.graphics.Color.parseColor("#5b3f2c"))
+        
+        // Manually initialize UserDao without Hilt
+        try {
+            val database = MainApplication.getDatabase(applicationContext)
+            userDao = database.userDao()
+            Log.d("UserListActivity", "Database initialized successfully")
+        } catch (e: Exception) {
+            Log.e("UserListActivity", "Error initializing database: ${e.message}")
+            Toast.makeText(this, "Error initializing database: ${e.message}", Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
 
         try {
             listView = findViewById(R.id.listView)

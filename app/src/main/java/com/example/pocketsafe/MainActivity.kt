@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import com.example.pocketsafe.ui.theme.PocketSafeTheme
-import com.example.pocketsafe.data.UserDatabase
+import com.example.pocketsafe.data.AppDatabase
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +63,7 @@ fun LoginPageLayout(modifier: Modifier = Modifier) {
                 .background(Color(0xFF994F31), shape = RoundedCornerShape(8.dp))
         ) {
             Image(
-                painter = painterResource(id = R.drawable.logo),
+                painter = painterResource(id = R.drawable.pocketsafe),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize()
             )
@@ -129,7 +129,7 @@ fun LoginPageLayout(modifier: Modifier = Modifier) {
         Button(
             onClick = {
                 scope.launch {
-                    val userDao = UserDatabase.getDatabase(context).userDao()
+                    val userDao = AppDatabase.getDatabase(context).userDao()
                     val user = userDao.getUserByEmail(email)
 
                     if (user != null && user.password == password) {

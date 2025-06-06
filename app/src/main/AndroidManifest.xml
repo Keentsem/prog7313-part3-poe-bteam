@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.pocketsafe">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -10,7 +9,7 @@
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
-        android:name=".PocketSafeApplication"
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -31,15 +30,22 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- LOGIN ACTIVITY (Main Launcher) -->
+        <!-- WELCOME ACTIVITY (Main Launcher) -->
         <activity
-            android:name=".ui.auth.LoginActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize">
+            android:name=".ui.activity.WelcomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <!-- LOGIN ACTIVITY with pixel-retro theme -->
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.PocketSafe">
         </activity>
 
         <!-- REGISTER ACTIVITY -->
@@ -72,6 +78,36 @@
             android:name=".ui.MyPocketActivity"
             android:exported="false"
             android:theme="@style/Theme.PocketSafe" />
+
+        <!-- SUBSCRIPTION LIST ACTIVITY -->
+        <activity
+            android:name=".ui.activity.SubscriptionListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PocketSafe" />
+            
+        <!-- SUBSCRIPTION DETAIL ACTIVITY -->
+        <activity
+            android:name=".ui.activity.SubscriptionDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PocketSafe" />
+
+        <!-- BILL REMINDER LIST ACTIVITY -->
+        <activity
+            android:name=".ui.activity.BillReminderListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PocketSafe" />
+
+        <!-- MAIN ACTIVITY -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PocketSafe" />
+            
+        <!-- NAVIGATION ACTIVITY - Compose Navigation with pixel-retro theme -->
+        <activity
+            android:name=".NavigationActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PocketSafe.NoActionBar" />
 
     </application>
 

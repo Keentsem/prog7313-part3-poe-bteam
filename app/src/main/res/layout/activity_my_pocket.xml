@@ -11,111 +11,297 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Header -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="MyPocket"
-            android:textColor="#E6AEFF"
-            android:textSize="32sp"
-            android:fontFamily="@font/pixel_game"
-            android:gravity="center"
-            android:layout_marginBottom="24dp"/>
-
-        <!-- Pie Chart -->
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pieChart"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginBottom="24dp"/>
-
-        <!-- Filter Section -->
+        <!-- Header with Icon -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/pixel_border"
-            android:padding="16dp"
+            android:orientation="horizontal"
+            android:gravity="center"
             android:layout_marginBottom="16dp">
 
-            <!-- Category Spinner -->
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_wallet"
+                android:tint="@color/teal_primary"
+                android:layout_marginEnd="12dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Category"
-                android:textColor="#E6AEFF"
+                android:text="MyPocket"
+                android:textColor="@color/teal_primary"
+                android:textSize="32sp"
                 android:fontFamily="@font/pixel_game"
-                android:textSize="18sp"
-                android:layout_marginBottom="8dp"/>
+                android:gravity="center" />
+        </LinearLayout>
 
-            <Spinner
-                android:id="@+id/categorySpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/pixel_border"
-                android:padding="12dp"
-                android:fontFamily="@font/pixel_game"
-                android:textColor="#E6AEFF"
-                android:layout_marginBottom="16dp"/>
+        <!-- Budget Overview Card -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="@color/teal_primary">
 
-            <!-- Date Range -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <Button
-                    android:id="@+id/startDateButton"
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Start Date"
+                    android:text="Budget Overview"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
                     android:fontFamily="@font/pixel_game"
-                    android:textColor="#E6AEFF"
-                    android:background="@drawable/pixel_button"
-                    android:layout_marginEnd="8dp"/>
+                    android:gravity="center"
+                    android:layout_marginBottom="12dp" />
 
-                <Button
-                    android:id="@+id/endDateButton"
-                    android:layout_width="0dp"
+                <!-- Monthly Budget Progress -->
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="End Date"
+                    android:text="Monthly Budget"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
                     android:fontFamily="@font/pixel_game"
-                    android:textColor="#E6AEFF"
-                    android:background="@drawable/pixel_button"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginBottom="4dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <ProgressBar
+                        android:id="@+id/budgetProgressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:max="100"
+                        android:progress="65"
+                        android:progressBackgroundTint="#80FFFFFF"
+                        android:progressTint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/budgetPercentageTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="65%"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/pixel_game"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+
+                <!-- Budget Amounts -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/spentAmountTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Spent: $650.00"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/pixel_game" />
+
+                    <TextView
+                        android:id="@+id/budgetAmountTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Budget: $1000.00"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/pixel_game"
+                        android:gravity="end" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/remainingBudgetTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Remaining: $350.00"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/pixel_game"
+                    android:gravity="center" />
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-            <!-- Apply Filter Button -->
-            <Button
-                android:id="@+id/applyFilterButton"
+        <!-- Category Summary -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#80FFFFFF">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Apply Filter"
-                android:fontFamily="@font/pixel_game"
-                android:textColor="#E6AEFF"
-                android:background="@drawable/pixel_button"/>
-        </LinearLayout>
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Spending by Category"
+                    android:textColor="@color/teal_primary"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/pixel_game"
+                    android:gravity="center"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Pie Chart -->
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Category Legend RecyclerView -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/categoryLegendRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Filter Section -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#80FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Filter Expenses"
+                    android:textColor="@color/teal_primary"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/pixel_game"
+                    android:gravity="center"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Category Spinner -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Category"
+                    android:textColor="@color/teal_primary"
+                    android:fontFamily="@font/pixel_game"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="4dp" />
+
+                <Spinner
+                    android:id="@+id/categorySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/spinner_background"
+                    android:padding="8dp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Date Range -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date Range"
+                    android:textColor="@color/teal_primary"
+                    android:fontFamily="@font/pixel_game"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="4dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="12dp">
+
+                    <Button
+                        android:id="@+id/startDateButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Start Date"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/teal_primary"
+                        android:layout_marginEnd="8dp" />
+
+                    <Button
+                        android:id="@+id/endDateButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="End Date"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/teal_primary"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+
+                <!-- Apply Filter Button -->
+                <Button
+                    android:id="@+id/applyFilterButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Apply Filter"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/accent" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Expenses Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recent Expenses"
+            android:textColor="@color/teal_primary"
+            android:textSize="20sp"
+            android:fontFamily="@font/pixel_game"
+            android:gravity="center"
+            android:layout_marginBottom="8dp" />
 
         <!-- Total Amount -->
         <TextView
             android:id="@+id/totalAmountTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total Amount: $0.00"
-            android:textColor="#E6AEFF"
+            android:text="Total: $0.00"
+            android:textColor="@color/teal_primary"
             android:fontFamily="@font/pixel_game"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:gravity="center"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="12dp" />
 
         <!-- Expenses List -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/expensesRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
 
     </LinearLayout>
-</ScrollView> 
+</ScrollView>

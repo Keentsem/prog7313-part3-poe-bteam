@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">PocketSafe</string>
     <string name="category_icon">Category Icon</string>
+    <string name="edit_subscription">Edit Subscription</string>
+    <string name="error_init_subscription_view">Failed to initialize subscription view</string>
+    <string name="error_loading_subscriptions">Error loading subscriptions: %1$s</string>
+    <string name="error_initializing_viewmodel">Error initializing ViewModel: %1$s</string>
+    <string name="amount_format">$%1$s</string>
 </resources>

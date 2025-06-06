@@ -9,13 +9,15 @@ import com.example.pocketsafe.data.Category
 import com.example.pocketsafe.data.IconType
 import com.example.pocketsafe.data.dao.CategoryDao
 import com.example.pocketsafe.PocketSafeApplication
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-@AndroidEntryPoint
+/**
+ * Activity for creating and managing expense categories
+ * Modified to work without Hilt to prevent app crashes
+ * Maintains pixel-retro theme styling with gold (#f3c34e) and brown (#5b3f2c) colors
+ */
 class CategoryActivity : AppCompatActivity() {
 
     private lateinit var etCategoryName: EditText
@@ -24,12 +26,25 @@ class CategoryActivity : AppCompatActivity() {
     private lateinit var btnSaveCategory: Button
     private lateinit var btnBackToMenu: Button
     
-    @Inject
-    lateinit var categoryDao: CategoryDao
+    // Manually initialize instead of using Hilt injection
+    private lateinit var categoryDao: CategoryDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category)
+        
+        // Apply pixel-retro theme styling with brown (#5b3f2c) background
+        window.decorView.setBackgroundColor(android.graphics.Color.parseColor("#5b3f2c"))
+        
+        // Manually initialize the CategoryDao without Hilt
+        try {
+            val database = PocketSafeApplication.getDatabase(applicationContext)
+            categoryDao = database.categoryDao()
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error initializing database: ${e.message}", Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
 
         // Initialize views
         initializeViews()

@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary colors -->
-    <color name="primary">#EEBA86</color>
-    <color name="primary_dark">#D9A979</color>
-    <color name="primary_light">#F5D9BC</color>
+    <!-- Pixel-retro theme colors -->
+    <color name="primary">#f3c34e</color> <!-- Gold -->
+    <color name="primary_dark">#d7a939</color> <!-- Darker Gold -->
+    <color name="primary_light">#f8d47c</color> <!-- Lighter Gold -->
 
     <!-- Secondary colors -->
-    <color name="secondary">#FFD1AE</color>
-    <color name="secondary_dark">#E6BC9D</color>
+    <color name="secondary">#5b3f2c</color> <!-- Brown -->
+    <color name="secondary_dark">#42301f</color> <!-- Darker Brown -->
+    <color name="secondary_light">#7a5e4a</color> <!-- Lighter Brown -->
 
     <!-- Basic colors -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
     <!-- Accent color -->
-    <color name="accent">#FF9800</color>
+    <color name="accent">#f3c34e</color> <!-- Gold accent -->
 
-    <!-- Teal theme colors (user preference) -->
+    <!-- Teal theme colors (keeping for backward compatibility) -->
     <color name="teal_primary">#2e8687</color>
     <color name="teal_secondary">#3ca6a7</color>
     <color name="teal_light">#c5e8e8</color>
 
     <!-- Bottom Navigation colors -->
-    <color name="bottom_nav_item_color">@color/teal_primary</color>
+    <color name="bottom_nav_item_color">@color/secondary</color>
 
     <!-- Category colors -->
-    <color name="selected_category">#E3F2FD</color>
+    <color name="selected_category">#f8d47c</color> <!-- Light Gold -->
     <color name="category_card_default">#F5F5F5</color>
 
     <!-- Layout colors -->
-    <color name="background_color">#994F31</color>
-    <color name="text_color">#EEBA86</color>
-    <color name="button_color">#A89D92</color>
-    <color name="header_color">@color/teal_primary</color>
-    <color name="card_color">@color/teal_primary</color>
-    <color name="secondary_button_color">@color/teal_primary</color>
+    <color name="background_color">#5b3f2c</color> <!-- Brown -->
+    <color name="text_color">#f3c34e</color> <!-- Gold -->
+    <color name="button_color">#f3c34e</color> <!-- Gold -->
+    <color name="header_color">@color/secondary</color> <!-- Brown -->
+    <color name="card_color">@color/secondary</color> <!-- Brown -->
+    <color name="secondary_button_color">@color/secondary</color> <!-- Brown -->
 
+    <!-- Legacy colors (keeping for backward compatibility) -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

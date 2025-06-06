@@ -6,18 +6,29 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CategoryDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCategory(category: Category)
-
+    // Returns Flow for observing changes
     @Query("SELECT * FROM categories")
     fun getAllCategories(): Flow<List<Category>>
 
-    @Query("SELECT * FROM categories WHERE id = :id")
-    suspend fun getCategoryById(id: Int): Category?
+    // Asynchronous version for other uses
+    @Query("SELECT * FROM categories")
+    suspend fun getAllCategoriesAsync(): List<Category>
+
+    @Insert
+    suspend fun insertCategory(category: Category): Long
+
+    @Query("SELECT name FROM categories WHERE id = :categoryId")
+    suspend fun getCategoryName(categoryId: Int): String?
+
+    @Query("SELECT name FROM categories WHERE id = :categoryId")
+    fun getCategoryNameSync(categoryId: Int): String?
+
+    @Update
+    suspend fun updateCategory(category: Category)
 
     @Delete
     suspend fun deleteCategory(category: Category)
 
-    @Update
-    suspend fun update(category: Category)
-} 
+    @Query("DELETE FROM categories WHERE id = :categoryId")
+    suspend fun deleteCategoryById(categoryId: Int)
+}

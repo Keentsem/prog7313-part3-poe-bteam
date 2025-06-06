@@ -3,6 +3,19 @@
     <!-- Base application theme. -->
     <!-- Removed duplicate Theme.PocketSafe style -->
 
+    <!-- No ActionBar theme for Compose UI with pixel-retro styling -->
+    <style name="Theme.PocketSafe.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#f3c34e</item> <!-- Gold color for pixel-retro theme -->
+        <item name="colorPrimaryVariant">#cca442</item> <!-- Darker gold variant -->
+        <item name="colorOnPrimary">#5b3f2c</item> <!-- Brown text color -->
+        <item name="colorSecondary">#5b3f2c</item> <!-- Brown color for accents -->
+        <item name="colorSecondaryVariant">#422d20</item> <!-- Darker brown variant -->
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="fontFamily">@font/pixel_game</item>
+    </style>
+
     <!-- Bottom Navigation Theme -->
     <!-- Removed duplicate Widget.PocketSafe.BottomNavigation style -->
 
@@ -32,5 +45,18 @@
     <style name="TextAppearance.PocketSafe.BottomNavigation.Inactive" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textSize">12sp</item>
         <item name="fontFamily">@font/pixel_game</item>
+    </style>
+    <style name="PixelTabTextAppearance" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/pixel_game</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="PixelButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/pixel_game</item>
+        <item name="android:textColor">#5b3f2c</item>
+        <item name="cornerRadius">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
     </style>
 </resources> 

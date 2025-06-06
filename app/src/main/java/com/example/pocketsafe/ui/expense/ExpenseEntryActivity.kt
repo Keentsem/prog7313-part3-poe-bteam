@@ -11,11 +11,14 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.example.pocketsafe.R
 import com.google.android.material.textfield.TextInputEditText
-import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
-@AndroidEntryPoint
+/**
+ * Activity for entering new expenses
+ * Modified to work without Hilt to prevent app crashes
+ * Maintains pixel-retro theme styling with gold (#f3c34e) and brown (#5b3f2c) colors
+ */
 class ExpenseEntryActivity : AppCompatActivity() {
     private lateinit var dateEditText: EditText
     private lateinit var categoryButton: Button

@@ -144,6 +144,19 @@
 
         </FrameLayout>
 
+        <!-- Save Expense Button with pixel-retro styling -->
+        <Button
+            android:id="@+id/btnSaveExpense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/pixel_button"
+            android:fontFamily="@font/pixel_game"
+            android:padding="12dp"
+            android:text="SAVE EXPENSE"
+            android:textColor="#f3c34e"
+            android:textSize="18sp" />
+
         <!-- Action Buttons -->
         <LinearLayout
             android:layout_width="match_parent"

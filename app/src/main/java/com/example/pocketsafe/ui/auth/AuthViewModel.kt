@@ -1,22 +1,42 @@
 package com.example.pocketsafe.ui.auth
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.pocketsafe.MainApplication
 import com.example.pocketsafe.data.User
 import com.example.pocketsafe.data.dao.UserDao
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-@HiltViewModel
-class AuthViewModel @Inject constructor(
+/**
+ * Authentication ViewModel that handles user login and registration
+ * Modified to work without Hilt to prevent app crashes
+ * Maintains pixel-retro theme styling for UI elements
+ */
+class AuthViewModel(
     private val userDao: UserDao
 ) : ViewModel() {
+    
+    /**
+     * Factory for creating AuthViewModel with the UserDao
+     */
+    class Factory(private val application: Application) : ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
+                // Create dao here without Hilt
+                val database = MainApplication.getDatabase(application)
+                return AuthViewModel(database.userDao()) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
+    }
     private val _authState = MutableStateFlow<AuthState>(AuthState.Initial)
     val authState: StateFlow<AuthState> = _authState
 

@@ -15,13 +15,25 @@ class Converters {
         return date?.time
     }
 
+    // Uri converters
     @TypeConverter
-    fun fromString(value: String?): Uri? {
+    fun fromUriString(value: String?): Uri? {
         return if (value == null) null else Uri.parse(value)
     }
 
     @TypeConverter
-    fun toString(uri: Uri?): String? {
+    fun toUriString(uri: Uri?): String? {
         return uri?.toString()
+    }
+
+    // List<String> converters
+    @TypeConverter
+    fun fromStringList(value: String?): List<String>? {
+        return value?.split(",")?.map { it.trim() }
+    }
+
+    @TypeConverter
+    fun toStringList(list: List<String>?): String? {
+        return list?.joinToString(",")
     }
 } 

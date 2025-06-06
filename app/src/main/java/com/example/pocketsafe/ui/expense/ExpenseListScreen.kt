@@ -16,10 +16,11 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.livedata.observeAsState
+import com.example.pocketsafe.MainApplication
 import com.example.pocketsafe.R
 import com.example.pocketsafe.data.Expense
-import kotlinx.coroutines.flow.collectLatest
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,9 +28,9 @@ import java.util.*
 @Composable
 fun ExpenseListScreen(
     onNavigateToAddExpense: () -> Unit,
-    viewModel: ExpenseViewModel = hiltViewModel()
+    viewModel: ExpenseViewModel = viewModel(factory = ExpenseViewModel.Factory(MainApplication.instance))
 ) {
-    val expenses = viewModel.allExpenses.collectAsState(initial = emptyList())
+    val expenses = viewModel.allExpenses.observeAsState(initial = emptyList())
     var selectedCategoryId by remember { mutableStateOf<Int?>(null) }
     val pixelFont = FontFamily(Font(R.font.pixel_game))
     

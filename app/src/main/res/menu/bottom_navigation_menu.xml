@@ -9,6 +9,16 @@
         android:id="@+id/navigation_expenses"
         android:icon="@drawable/ic_money"
         android:title="Expenses"/>
+        
+    <item
+        android:id="@+id/navigation_subscriptions"
+        android:icon="@drawable/ic_subscription"
+        android:title="Subscriptions"/>
+        
+    <item
+        android:id="@+id/navigation_bills"
+        android:icon="@drawable/ic_bills"
+        android:title="Bills"/>
 
     <item
         android:id="@+id/navigation_categories"
