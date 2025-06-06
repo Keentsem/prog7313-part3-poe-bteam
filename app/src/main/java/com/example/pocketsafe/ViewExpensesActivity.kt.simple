@@ -1,0 +1,78 @@
+package com.example.pocketsafe
+
+import android.os.Bundle
+import android.util.Log
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import com.example.pocketsafe.data.AppDatabase
+import com.example.pocketsafe.MainApplication
+
+/**
+ * Simple Activity for viewing expenses.
+ * This is a minimal version to ensure compilation works.
+ */
+class ViewExpensesActivity : AppCompatActivity() {
+    private lateinit var db: AppDatabase
+    private val TAG = "ViewExpensesActivity"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        // Create a simple layout
+        val mainLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(16, 16, 16, 16)
+        }
+        
+        // Add a simple text view
+        val textView = TextView(this).apply {
+            text = "Expenses View"
+            textSize = 20f
+        }
+        mainLayout.addView(textView)
+        
+        setContentView(mainLayout)
+        
+        // Try to initialize database
+        try {
+            db = MainApplication.getDatabase(applicationContext)
+            Log.d(TAG, "Database initialized successfully")
+            
+            // Load data (simplest approach)
+            loadData()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error initializing database: ${e.message}")
+            Toast.makeText(this, "Database error: ${e.message}", Toast.LENGTH_LONG).show()
+        }
+    }
+    
+    private fun loadData() {
+        // Simple coroutine to attempt database access
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                // Try to access the database to verify it works
+                val categories = db.categoryDao().getAllCategories()
+                
+                withContext(Dispatchers.Main) {
+                    // Update UI with success message
+                    Toast.makeText(this@ViewExpensesActivity, 
+                        "Loaded ${categories.size} categories", 
+                        Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error loading data: ${e.message}")
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@ViewExpensesActivity, 
+                        "Error: ${e.message}", 
+                        Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+}

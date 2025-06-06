@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_corner_background"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/dial"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tvDialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add to Your Savings"
+        android:textSize="24sp"
+        android:textColor="#f3c34e"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:fontFamily="@font/pixel_game"
+        app:layout_constraintTop_toBottomOf="@id/ivLogo"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tvDialogMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter the amount you want to add to your savings goal. Watch your progress grow with each contribution!"
+        android:textSize="16sp"
+        android:textColor="#f3c34e"
+        android:fontFamily="@font/pixel_game"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        app:layout_constraintTop_toBottomOf="@id/tvDialogTitle"
+        android:layout_marginTop="16dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilAmountInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvDialogMessage"
+        android:layout_marginTop="16dp"
+        app:boxBackgroundColor="#5b3f2c"
+        app:hintTextColor="#f3c34e"
+        android:textColorHint="#f3c34e">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSavingsAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Amount"
+            android:textColor="#f3c34e"
+            android:fontFamily="@font/pixel_game"
+            android:inputType="numberDecimal"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/tilAmountInput"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CANCEL"
+            android:padding="12dp"
+            android:textColor="#5b3f2c"
+            android:background="@drawable/curved_button"
+            android:fontFamily="@font/pixel_game"
+            android:layout_marginEnd="16dp"/>
+
+        <Button
+            android:id="@+id/btnAddSavings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADD SAVINGS"
+            android:padding="12dp"
+            android:textColor="#5b3f2c"
+            android:background="@drawable/curved_button"
+            android:fontFamily="@font/pixel_game"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

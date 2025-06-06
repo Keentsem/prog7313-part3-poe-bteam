@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="60dp"
+    android:height="30dp"
+    android:viewportWidth="60"
+    android:viewportHeight="30">
+    
+    <!-- Stamp outline -->
+    <path
+        android:fillColor="#5b3f2c"
+        android:pathData="M2,2h56v26h-56zM4,4v22h52v-22z"/>
+    
+    <!-- PAID text in pixel style -->
+    <path
+        android:fillColor="#f3c34e"
+        android:pathData="M8,8h4v4h-4zM8,12h4v10h-4zM12,8h4v4h-4zM16,8h4v4h-4zM16,12h4v4h-4zM12,16h4v4h-4zM24,8h4v14h-4zM28,8h4v4h-4zM32,8h4v4h-4zM28,16h4v4h-4zM32,12h4v10h-4zM40,8h4v14h-4zM44,8h4v4h-4zM48,8h4v14h-4z"/>
+</vector>

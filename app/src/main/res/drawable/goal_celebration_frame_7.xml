@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+    
+    <!-- Background -->
+    <path
+        android:fillColor="#5b3f2c"
+        android:pathData="M0,0 L64,0 L64,64 L0,64 z" />
+        
+    <!-- Gold Star - Frame 7 (small) -->
+    <path
+        android:fillColor="#f3c34e"
+        android:pathData="M32,16 L36,28 L48,28 L38,36 L42,48 L32,40 L22,48 L26,36 L16,28 L28,28 z" />
+        
+    <!-- Pixel confetti fading -->
+    <path
+        android:fillColor="#f7d06e"
+        android:pathData="M4,12 L6,10 L8,12 L6,14 z" />
+    <path
+        android:fillColor="#f7d06e"
+        android:pathData="M60,52 L62,50 L64,52 L62,54 z" />
+    <path
+        android:fillColor="#f7d06e"
+        android:pathData="M60,12 L62,10 L64,12 L62,14 z" />
+    <path
+        android:fillColor="#f7d06e"
+        android:pathData="M4,52 L6,50 L8,52 L6,54 z" />
+    <path
+        android:fillColor="#f7d06e"
+        android:pathData="M14,26 L16,24 L18,26 L16,28 z" />
+    <path
+        android:fillColor="#f7d06e"
+        android:pathData="M50,38 L52,36 L54,38 L52,40 z" />
+    <path
+        android:fillColor="#f7d06e"
+        android:pathData="M28,34 L30,32 L32,34 L30,36 z" />
+    <path
+        android:fillColor="#f7d06e"
+        android:pathData="M38,32 L40,30 L42,32 L40,34 z" />
+</vector>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#511900"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Category"
+        android:textSize="20sp"
+        android:textColor="#f3c34e"
+        android:fontFamily="@font/pixel_game"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <RadioGroup
+        android:id="@+id/categoryRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp">
+
+        <RadioButton
+            android:id="@+id/rb_sports"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sports"
+            android:textColor="#f3c34e"
+            android:fontFamily="@font/pixel_game"
+            android:buttonTint="#f3c34e" />
+
+        <RadioButton
+            android:id="@+id/rb_entertainment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Entertainment"
+            android:textColor="#f3c34e"
+            android:fontFamily="@font/pixel_game"
+            android:buttonTint="#f3c34e" />
+
+        <RadioButton
+            android:id="@+id/rb_medical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Medical"
+            android:textColor="#f3c34e"
+            android:fontFamily="@font/pixel_game"
+            android:buttonTint="#f3c34e" />
+
+        <RadioButton
+            android:id="@+id/rb_necessities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Necessities"
+            android:textColor="#f3c34e"
+            android:fontFamily="@font/pixel_game"
+            android:buttonTint="#f3c34e" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/et_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Description"
+        android:textColorHint="#f3c34e"
+        android:textColor="#f3c34e"
+        android:fontFamily="@font/pixel_game"
+        android:background="@android:drawable/editbox_background"
+        android:padding="8dp"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/et_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Amount"
+        android:inputType="numberDecimal"
+        android:textColorHint="#f3c34e"
+        android:textColor="#f3c34e"
+        android:fontFamily="@font/pixel_game"
+        android:background="@android:drawable/editbox_background"
+        android:padding="8dp"/>
+
+</LinearLayout>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/denim_pocket_background"
+    android:fillViewport="true"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pixel_game"
+            android:gravity="center"
+            android:text="Add Subscription"
+            android:textColor="#f3c34e"
+            android:textSize="24sp"
+            android:layout_marginBottom="16dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/pixel_border"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Subscription Name -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pixel_game"
+                    android:text="Subscription Name"
+                    android:textColor="#5b3f2c"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/pixel_input_field"
+                    android:fontFamily="@font/pixel_game"
+                    android:hint="Enter name"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColor="#5b3f2c"
+                    android:textSize="14sp" />
+
+                <!-- Description -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pixel_game"
+                    android:text="Description"
+                    android:textColor="#5b3f2c"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/pixel_input_field"
+                    android:fontFamily="@font/pixel_game"
+                    android:hint="Enter description"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:padding="12dp"
+                    android:textColor="#5b3f2c"
+                    android:textSize="14sp" />
+
+                <!-- Amount -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pixel_game"
+                    android:text="Amount"
+                    android:textColor="#5b3f2c"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/pixel_input_field"
+                    android:fontFamily="@font/pixel_game"
+                    android:hint="0.00"
+                    android:inputType="numberDecimal"
+                    android:padding="12dp"
+                    android:textColor="#5b3f2c"
+                    android:textSize="14sp" />
+
+                <!-- Category -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pixel_game"
+                    android:text="Category"
+                    android:textColor="#5b3f2c"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/pixel_input_field"
+                    android:padding="12dp" />
+
+                <!-- Renewal Date -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pixel_game"
+                    android:text="Next Renewal Date"
+                    android:textColor="#5b3f2c"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btnSelectDate"
+                    style="@style/PixelButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="#f3c34e"
+                    android:fontFamily="@font/pixel_game"
+                    android:padding="12dp"
+                    android:text="Select Date"
+                    android:textColor="#5b3f2c" />
+
+                <!-- Renewal Period -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pixel_game"
+                    android:text="Renewal Period"
+                    android:textColor="#5b3f2c"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerRenewalPeriod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/pixel_input_field"
+                    android:padding="12dp" />
+
+                <!-- Payment Method -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pixel_game"
+                    android:text="Payment Method"
+                    android:textColor="#5b3f2c"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etPaymentMethod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/pixel_input_field"
+                    android:fontFamily="@font/pixel_game"
+                    android:hint="Card/Account info"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColor="#5b3f2c"
+                    android:textSize="14sp" />
+
+                <!-- Notification Settings -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pixel_game"
+                    android:text="Notification Settings"
+                    android:textColor="#5b3f2c"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cbEnableNotifications"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:buttonTint="#5b3f2c" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pixel_game"
+                        android:text="Enable Notifications"
+                        android:textColor="#5b3f2c"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llNotificationDays"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pixel_game"
+                        android:text="Notify me"
+                        android:textColor="#5b3f2c"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/etNotificationDays"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:background="@drawable/pixel_input_field"
+                        android:fontFamily="@font/pixel_game"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:padding="8dp"
+                        android:text="3"
+                        android:textColor="#5b3f2c"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pixel_game"
+                        android:text="days before renewal"
+                        android:textColor="#5b3f2c"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Active Status -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/cbActive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:buttonTint="#5b3f2c" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pixel_game"
+                        android:text="Subscription is active"
+                        android:textColor="#5b3f2c"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/btnSave"
+            style="@style/PixelButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#f3c34e"
+            android:fontFamily="@font/pixel_game"
+            android:padding="16dp"
+            android:text="SAVE SUBSCRIPTION"
+            android:textColor="#5b3f2c"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+</ScrollView>

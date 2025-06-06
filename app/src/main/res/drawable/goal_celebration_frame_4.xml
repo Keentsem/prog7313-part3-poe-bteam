@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+    
+    <!-- Background -->
+    <path
+        android:fillColor="#5b3f2c"
+        android:pathData="M0,0 L64,0 L64,64 L0,64 z" />
+        
+    <!-- Gold Star - Frame 4 (largest) -->
+    <path
+        android:fillColor="#fad678"
+        android:pathData="M32,10 L39,28 L58,28 L42,40 L48,58 L32,44 L16,58 L22,40 L6,28 L25,28 z" />
+    
+    <!-- Middle star -->
+    <path
+        android:fillColor="#f3c34e"
+        android:pathData="M32,14 L37,28 L51,28 L40,36 L44,50 L32,40 L20,50 L24,36 L13,28 L27,28 z" />
+        
+    <!-- Pixel confetti scattered -->
+    <path
+        android:fillColor="#f3c34e"
+        android:pathData="M10,10 L12,8 L14,10 L12,12 z" />
+    <path
+        android:fillColor="#f3c34e"
+        android:pathData="M54,54 L56,52 L58,54 L56,56 z" />
+    <path
+        android:fillColor="#f3c34e"
+        android:pathData="M54,10 L56,8 L58,10 L56,12 z" />
+    <path
+        android:fillColor="#f3c34e"
+        android:pathData="M10,54 L12,52 L14,54 L12,56 z" />
+    <path
+        android:fillColor="#f3c34e"
+        android:pathData="M32,4 L34,2 L36,4 L34,6 z" />
+    <path
+        android:fillColor="#f3c34e"
+        android:pathData="M20,20 L22,18 L24,20 L22,22 z" />
+    <path
+        android:fillColor="#f3c34e"
+        android:pathData="M44,44 L46,42 L48,44 L46,46 z" />
+</vector>

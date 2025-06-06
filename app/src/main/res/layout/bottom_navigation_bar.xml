@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navigationBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#5b3f2c"
+    android:padding="12dp"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:elevation="8dp">
+
+    <!-- Home Button -->
+    <LinearLayout
+        android:id="@+id/btnHomeNav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+        
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/pocketsafe"
+            android:scaleType="fitCenter"
+            android:padding="2dp" />
+            
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HOME"
+            android:textColor="#f3c34e"
+            android:textSize="12sp"
+            android:fontFamily="@font/pixel_game" />
+    </LinearLayout>
+    
+    <!-- Banking Button -->
+    <LinearLayout
+        android:id="@+id/btnBankingNav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+        
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/profile_card"
+            android:scaleType="fitCenter"
+            android:padding="2dp" />
+            
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BANKING"
+            android:textColor="#f3c34e"
+            android:textSize="12sp"
+            android:fontFamily="@font/pixel_game" />
+    </LinearLayout>
+    
+    <!-- Analytics Button -->
+    <LinearLayout
+        android:id="@+id/btnAnalyticsNav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+        
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/analytics"
+            android:scaleType="fitCenter"
+            android:padding="2dp" />
+            
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ANALYTICS"
+            android:textColor="#f3c34e"
+            android:textSize="12sp"
+            android:fontFamily="@font/pixel_game" />
+    </LinearLayout>
+</LinearLayout>
