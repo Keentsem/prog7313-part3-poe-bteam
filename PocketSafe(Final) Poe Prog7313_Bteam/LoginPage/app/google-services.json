@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "277408361512",
+    "project_id": "pocketsafefirebase",
+    "storage_bucket": "pocketsafefirebase.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277408361512:android:b090fc7bfcd51f5524991d",
+        "android_client_info": {
+          "package_name": "vcmsa.projects.loginpage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwThjPEzlbrrB_3e2fyFdGXNRNsbSB7dQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
