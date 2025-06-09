@@ -115,7 +115,6 @@ fun ExpenseSplitScreen(firestore: FirebaseFirestore, context: Context, permissio
     val downloadCodeInput = remember { mutableStateOf("") }
 
     val creamColor = Color(0xFFF5F1E9)
-    val oakColor = Color(0xFFA67B5B)
     val scrollState = rememberScrollState()
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -126,10 +125,10 @@ fun ExpenseSplitScreen(firestore: FirebaseFirestore, context: Context, permissio
         ) {
             Text(
                 text = "Back",
-                fontSize = 18.sp,          // bigger font size
-                color = creamColor,        // cream color for the text
+                fontSize = 18.sp,
+                color = creamColor,
                 modifier = Modifier
-                    .padding(top = 38.dp, end = 12.dp)  // moved 1 cm lower and padding on right
+                    .padding(top = 38.dp, end = 12.dp)
                     .clickable {
                         val intent = Intent(context, MainMenu::class.java).apply {
                             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -137,8 +136,6 @@ fun ExpenseSplitScreen(firestore: FirebaseFirestore, context: Context, permissio
                         context.startActivity(intent)
                         (context as? ComponentActivity)?.finish()
                     }
-
-
             )
         }
 
@@ -151,8 +148,17 @@ fun ExpenseSplitScreen(firestore: FirebaseFirestore, context: Context, permissio
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("My Pocket Splitter", style = MaterialTheme.typography.headlineLarge, color = creamColor, fontWeight = FontWeight.Bold)
-            Text("Divide the bill with your friends and family!", style = MaterialTheme.typography.bodyLarge, color = creamColor)
+            Text(
+                "My Pocket Splitter",
+                style = MaterialTheme.typography.headlineLarge,
+                color = creamColor,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                "Divide the bill with your friends and family!",
+                style = MaterialTheme.typography.bodyLarge,
+                color = creamColor
+            )
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -329,9 +335,8 @@ fun generatePdfReceipt(
         document.add(Paragraph("Total: R${"%.2f".format(total)}").setBold())
 
         document.close()
-
-        Toast.makeText(context, "PDF saved as $fileName", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "PDF saved in Documents/ExpenseSplitter", Toast.LENGTH_LONG).show()
     } catch (e: Exception) {
-        Toast.makeText(context, "Error generating PDF: ${e.message}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Error creating PDF: ${e.message}", Toast.LENGTH_LONG).show()
     }
 }
